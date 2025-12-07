@@ -71,23 +71,27 @@
 
             <!-- RIGHT SIDE (WIFI FEATURE) -->
             <div class="col-lg-6 col-md-6">
-                <div class="bg-white rounded shadow p-4 border-top border-4 border-dark">
-                    <div class="d-flex align-items-center mb-2">
-                        <img src="./images/feautures/wifi.svg" width="40px">
-                        <h5 class="m-0 ms-3">Wifi</h5>
-                    </div>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        It has been the industry's standard dummy text ever since the 1500s.
-                    </p>
+                <div class="bg-white rounded shadow p-4 ">
+                    <form action="">
+                        <h5>Send a message</h5>
+                        <div class="mt-3"> <label class="form-label">Name</label> <input type="text"
+                                class="form-control shadow-none"> </div>
+                        <div class="mt-3"> <label class="form-label">Email</label> <input type="email"
+                                class="form-control shadow-none"> </div>
+                        <div class="mt-3"> <label class="form-label">Subject</label> <input type="text"
+                                class="form-control shadow-none"> </div>
+                        <div class="mt-3"> <label class="form-label">Message</label>
+                            <textarea class="form-control shadow-none" rows="5" style="resize:none;"></textarea>
+                        </div>
+                        <button type="submit" class="btn custom-bg mt-3 text-white shadow-none">Send</button>
+                    </form>
                 </div>
+
             </div>
-
         </div>
-    </div>
 
-    <!-- Footer -->
-    <?php require('common/footer.php'); ?>
+        <!-- Footer -->
+        <?php require('common/footer.php'); ?>
 
 </body>
 

@@ -7,7 +7,8 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"> <a class="nav-link active me-2" aria-current="page" href="index.php">Home</a>
                 </li>
-                <li class="nav-item"> <a class="nav-link active me-2" aria-current="page" href="#">Rooms</a> </li>
+                <li class="nav-item"> <a class="nav-link active me-2" aria-current="page" href="rooms.php">Rooms</a>
+                </li>
                 <li class="nav-item"> <a class="nav-link active me-2" aria-current="page"
                         href="facilities.php">Facilities</a>
                 </li>
