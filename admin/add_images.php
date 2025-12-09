@@ -1,7 +1,7 @@
 <?php
 include './inc/connection.php';
 
-$room_id = $_GET['room_id']; // room id পেতে হবে URL থেকে
+$room_id = $_GET['room_id']; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
