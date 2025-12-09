@@ -71,11 +71,25 @@
                                         maxlength="2000"></textarea>
                                 </div>
 
+
+                                <div class="col-5 d-flex align-items-center">
+                                    <input class="form-check-input m-2" type="checkbox" value="Wifi">
+                                    <label class="form-check-label pe-4">Wifi</label>
+
+
+                                    <input class=" form-check-input m-2" type="checkbox" id="inlineCheckbox2"
+                                        value="Television">
+                                    <label class="form-check-label pe-4" for="inlineCheckbox2">Television</label>
+                                    <input class="form-check-input m-2" type="checkbox" id="inlineCheckbox3" value="AC">
+                                    <label class="form-check-label pe-4" for="inlineCheckbox3">AC</label>
+                                </div>
+
                                 <div class="col-md-6">
                                     <label class="form-label">Main Image (single)</label>
                                     <input name="main_image" type="file" accept="image/*" class="form-control">
                                     <div class="form-text">JPEG/PNG/GIF — max 2MB recommended</div>
                                 </div>
+
                             </div>
 
                             <div class="mt-4">
