@@ -58,18 +58,18 @@ $room = mysqli_fetch_assoc($data);
                                 <div class="col-md-4">
                                     <label class="form-label">Room Size</label>
                                     <input name="room_size" type="text" class="form-control"
-                                        value="<?php echo $room['room_size']; ?>" maxlength="50">
+                                        value="<?= $room['room_size']; ?>" maxlength="50">
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Bed Type</label>
                                     <input name="bed_type" type="text" class="form-control"
-                                        value="<?php echo $room['bed_type']; ?>" maxlength="50">
+                                        value="<?= $room['bed_type']; ?>" maxlength="50">
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="form-label">Price (BDT)</label>
-                                    <input name="price" type="number" step="0.01" value="<?php echo $room['price']; ?>"
+                                    <input name="price" type="number" step="0.01" value="<?= $room['price']; ?>"
                                         class="form-control" required>
                                 </div>
 
@@ -89,12 +89,12 @@ $room = mysqli_fetch_assoc($data);
                                 <div class="col-12">
                                     <label class="form-label">Description</label>
                                     <textarea name="description" class="form-control" rows="4"
-                                        maxlength="2000"><?php echo $room['description']; ?></textarea>
+                                        maxlength="2000"><?= $room['description']; ?></textarea>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label class="form-label">Current Image</label><br>
-                                    <img src="<?php echo $room['main_image']; ?>" width="180" height="120"
+                                    <img src="<?= $room['main_image']; ?>" width="180" height="120"
                                         style="object-fit:cover;border:1px solid #ccc;border-radius:4px;">
                                 </div>
 
@@ -108,7 +108,7 @@ $room = mysqli_fetch_assoc($data);
 
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-primary">Update Room</button>
-                                <a href="all-rooms.php" class="btn btn-outline-secondary ms-2">Cancel</a>
+                                <a href="all_rooms.php" class="btn btn-outline-secondary ms-2">Cancel</a>
                             </div>
 
                         </form>

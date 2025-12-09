@@ -39,19 +39,18 @@ $rooms = mysqli_query($conn, $sql);
                     <tbody>
                         <?php while($row = mysqli_fetch_assoc($rooms)) { ?>
                         <tr>
-                            <td><?php echo $row['id']; ?></td>
+                            <td><?= $row['id']; ?></td>
 
                             <td>
-                                <img src="<?php echo $row['main_image']; ?>" width="80" height="60"
-                                    style="object-fit: cover;">
+                                <img src="<?= $row['main_image']; ?>" width="80" height="60" style="object-fit: cover;">
                             </td>
 
-                            <td><?php echo $row['room_number']; ?></td>
-                            <td><?php echo $row['room_type']; ?></td>
-                            <td><?php echo $row['room_size']; ?></td>
-                            <td><?php echo $row['bed_type']; ?></td>
+                            <td><?= $row['room_number']; ?></td>
+                            <td><?= $row['room_type']; ?></td>
+                            <td><?= $row['room_size']; ?></td>
+                            <td><?= $row['bed_type']; ?></td>
 
-                            <td>$<?php echo number_format($row['price'], 2); ?></td>
+                            <td>$<?= number_format($row['price'], 2); ?></td>
 
                             <td>
                                 <?php 
@@ -71,23 +70,25 @@ $rooms = mysqli_query($conn, $sql);
                                  ?>
                             </td>
 
-                            <td><?php echo substr($row['description'], 0, 40); ?>...</td>
+                            <td><?= substr($row['description'], 0, 40); ?>...</td>
 
                             <td>
                                 <div class="d-inline-flex flex-column" style="min-width: 120px;">
 
                                     <div class="d-flex gap-2 mb-2">
-                                        <a href="edit_room.php?id=<?php echo $row['id']; ?>"
+                                        <a href="edit_room.php?id=<?= $row['id']; ?>"
                                             class="btn btn-warning btn-sm flex-fill">Edit</a>
 
-                                        <a href="delete_room.php?id=<?php echo $row['id']; ?>"
+                                        <a href="delete_room.php?id=<?= $row['id']; ?>"
                                             onclick="return confirm('Delete this room?')"
                                             class="btn btn-danger btn-sm flex-fill">Delete</a>
                                     </div>
 
-                                    <a href="add_images.php?room_id=<?php echo $row['id']; ?>"
+                                    <a href="add_images.php?room_id=<?= $row['id']; ?>"
                                         class="btn btn-info btn-sm flex-fill">Upload Images</a>
 
+                                    <a href="booking_details.php?room_id=<?= $row['id']; ?>"
+                                        class="btn btn-primary btn-sm flex-fill mt-2">Booking Details</a>
                                 </div>
                             </td>
 
@@ -100,6 +101,7 @@ $rooms = mysqli_query($conn, $sql);
         </div>
     </div>
 
+    <?php require('inc/script.php')?>
 
 </body>
 
