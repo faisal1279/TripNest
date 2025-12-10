@@ -2,28 +2,25 @@
 session_start();
 include './inc/connection.php';
 
-if(isset($_SESSION['adminLogin'])){
+if (!empty($_SESSION['adminLogin'])) {
     header("Location: dashboard.php");
     exit;
 }
 
-$error = "";
 
-if(isset($_POST['login'])){
-    $admin_name = $_POST['admin_name'];
-    $admin_pass = $_POST['admin_pass'];
+$admin_name = $_POST['admin_name'] ?? '';
+$admin_pass = $_POST['admin_pass'] ?? '';
+$error = '';
 
-    $sql = "SELECT * FROM admin_login 
-            WHERE admin_name='$admin_name' AND admin_pass='$admin_pass'";
-
-    $res = mysqli_query($conn, $sql);
-
-    if(mysqli_num_rows($res) == 1){
+if ($admin_name && $admin_pass) {
+    
+    $sql = "SELECT * FROM admin_login WHERE admin_name='$admin_name' AND admin_pass='$admin_pass'";
+    $res = mysqli_query($conn,$sql);
+    
+    if (mysqli_num_rows($res)) {
         $row = mysqli_fetch_assoc($res);
-
         $_SESSION['adminLogin'] = true;
         $_SESSION['adminID'] = $row['id'];
-
         header("Location: dashboard.php");
         exit;
     } else {
@@ -46,7 +43,11 @@ if(isset($_POST['login'])){
 
         <h3 class="text-center mb-4">Admin Login</h3>
 
-        <?php if($error){ echo "<div class='alert alert-danger'>$error</div>"; } ?>
+        <?php 
+        if ($error) {
+            echo "<div class='alert alert-danger'>$error</div>";
+        }
+        ?>
 
         <form method="POST">
             <input type="text" name="admin_name" class="form-control mb-3" placeholder="Admin Name" required>
