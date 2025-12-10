@@ -1,3 +1,9 @@
+<?php
+require('common/links.php');
+require('admin/inc/connection.php');   
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,26 +18,77 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 </head>
 <style>
-/* .poppins-thin { font-family: "Poppins", sans-serif; font-weight: 100; font-style: normal; } .poppins-extralight { font-family: "Poppins", sans-serif; font-weight: 200; font-style: normal; } .poppins-light { font-family: "Poppins", sans-serif; font-weight: 300; font-style: normal; } .poppins-regular { font-family: "Poppins", sans-serif; font-weight: 400; font-style: normal; } .poppins-medium { font-family: "Poppins", sans-serif; font-weight: 500; font-style: normal; } .poppins-semibold { font-family: "Poppins", sans-serif; font-weight: 600; font-style: normal; } .poppins-bold { font-family: "Poppins", sans-serif; font-weight: 700; font-style: normal; } .poppins-extrabold { font-family: "Poppins", sans-serif; font-weight: 800; font-style: normal; } .poppins-black { font-family: "Poppins", sans-serif; font-weight: 900; font-style: normal; } .poppins-thin-italic { font-family: "Poppins", sans-serif; font-weight: 100; font-style: italic; } .poppins-extralight-italic { font-family: "Poppins", sans-serif; font-weight: 200; font-style: italic; } .poppins-light-italic { font-family: "Poppins", sans-serif; font-weight: 300; font-style: italic; } .poppins-regular-italic { font-family: "Poppins", sans-serif; font-weight: 400; font-style: italic; } .poppins-medium-italic { font-family: "Poppins", sans-serif; font-weight: 500; font-style: italic; } .poppins-semibold-italic { font-family: "Poppins", sans-serif; font-weight: 600; font-style: italic; } .poppins-bold-italic { font-family: "Poppins", sans-serif; font-weight: 700; font-style: italic; } .poppins-extrabold-italic { font-family: "Poppins", sans-serif; font-weight: 800; font-style: italic; } .poppins-black-italic { font-family: "Poppins", sans-serif; font-weight: 900; font-style: italic; } .merienda-<uniquifier> { font-family: "Merienda", cursive; font-optical-sizing: auto; font-weight: <weight>; font-style: normal; } */
-
 .availability-form {
     margin-top: -50px;
     z-index: 2;
     position: relative;
 }
 
-@media screen and (max-width:575px) {
-    .availability-form {
-        margin-top: 25px;
-        padding: 0 35px;
-    }
+
+.special-offers {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    width: 100%;
+}
+
+.offers-tag {
+    color: #f8d97a;
+    font-weight: 600;
+}
+
+/* Offer card layout */
+.offer-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 250px;
+}
+
+.offer-card img {
+    width: 100%;
+    max-width: 40%;
+    object-fit: cover;
+}
+
+.offer-content {
+    padding: 2rem;
+}
+
+.offer-content a {
+    color: #f8d97a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.discount-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #f8d97a;
+    color: #333;
+    font-weight: bold;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    border-bottom-right-radius: 12px;
+}
+
+.offer-card.light {
+    background: #f9c97d;
+    color: #222;
+}
+
+.offer-card.dark {
+    background: #0e0e0e;
+    color: #fff;
 }
 </style>
 
 <body class="bg-light">
 
     <?php require('common/header.php'); ?>
-    <!--=======================Hero Section=========================  -->
+
+    <!--=======================Hero Section=========================-->
     <div class="container-fluid px-lg-4 mt-4">
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
@@ -97,34 +154,42 @@
         </div>
     </div>
 
-    <!-- Our rooms -->
+    <!-- ======================Our Rooms========================================== -->
 
     <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR ROOMS</h2>
 
 
     <div class="container">
         <div class="row">
+            <?php
+            $sql = "SELECT * FROM room_details ORDER BY id DESC LIMIT 3";
+             $rooms = mysqli_query($conn,$sql );
+
+                while ($row = mysqli_fetch_assoc($rooms)) :
+                ?>
+
+
             <div class="col-lg-4 col-md-6 my-3">
                 <div class="card border-0 shadow" style="max-width:350px; margin:auto;">
-                    <img src="https://images.unsplash.com/photo-1631049552057-403cdb8f0658?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                        class="card-img-top">
+
+                    <?php 
+                        $img_path = 'admin/' . $row['main_image']; 
+                    ?>
+
+                    <img src="<?= $img_path; ?>" class="card-img-top" height="220px">
+
+
                     <div class="card-body">
-                        <h5>Simple room Name</h5>
-                        <div class="features mb-4">
-                            <h6 class="mb-4">৳200 per night</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">2 Rooms</span>
-                            <span class="badge rounded-pill text-dark text-wrap"> 1 Bathroom</span>
-                            <span class="badge rounded-pill text-dark text-wrap">1 Balcony</span>
-                            <span class="badge rounded-pill text-dark text-wrap">3 Sofa</span>
-                        </div>
-                        <div class="facilities mb-4">
+                        <h5 class=""><?= $row['room_type']; ?></h5>
+                        <h6 class="mb-2">Tk <?= $row['price']; ?> per night</h6>
+                        <div class="facilities mb-2">
                             <h6 class="mb-1">Facilities</h6>
                             <span class="badge rounded-pill text-dark text-wrap">Wifi</span>
                             <span class="badge rounded-pill text-dark text-wrap">Television</span>
                             <span class="badge rounded-pill text-dark text-wrap">AC</span>
                             <span class="badge rounded-pill text-dark text-wrap">Room Heater</span>
                         </div>
-                        <div class="facilities mb-4">
+                        <div class="facilities mb-2">
                             <h6 class="mb-1">Guest</h6>
                             <span class="badge rounded-pill text-dark text-wrap">5 Adults</span>
                             <span class="badge rounded-pill text-dark text-wrap">4 Children</span>
@@ -140,207 +205,169 @@
                             </span>
                         </div>
                         <div class="d-flex justify-content-evenly">
-                            <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book now</a>
-                            <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
+                            <a href="booking_form.php?id=<?= $row['id']; ?>" class=" btn btn-sm text-white custom-bg
+                                shadow-none">Book now</a>
+
+
+                            <a href="room_details.php?id=<?= $row['id']; ?>"
+                                class="btn btn-sm text-white custom-bg shadow-none">
+                                More details
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 my-3">
-                <div class="card border-0 shadow" style="max-width:350px; margin:auto;">
-                    <img src="https://images.unsplash.com/photo-1631049552057-403cdb8f0658?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                        class="card-img-top">
-                    <div class="card-body">
-                        <h5>Simple room Name</h5>
-                        <div class="features mb-4">
-                            <h6 class="mb-4">৳200 per night</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">2 Rooms</span>
-                            <span class="badge rounded-pill text-dark text-wrap"> 1 Bathroom</span>
-                            <span class="badge rounded-pill text-dark text-wrap">1 Balcony</span>
-                            <span class="badge rounded-pill text-dark text-wrap">3 Sofa</span>
-                        </div>
-                        <div class="facilities mb-4">
-                            <h6 class="mb-1">Facilities</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">Wifi</span>
-                            <span class="badge rounded-pill text-dark text-wrap">Television</span>
-                            <span class="badge rounded-pill text-dark text-wrap">AC</span>
-                            <span class="badge rounded-pill text-dark text-wrap">Room Heater</span>
-                        </div>
-                        <div class="facilities mb-4">
-                            <h6 class="mb-1">Guest</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">5 Adults</span>
-                            <span class="badge rounded-pill text-dark text-wrap">4 Children</span>
-                        </div>
-                        <div class="rating mb-4">
-                            <h6 class="mb-1">Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-evenly">
-                            <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book now</a>
-                            <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 my-3">
-                <div class="card border-0 shadow" style="max-width:350px; margin:auto;">
-                    <img src="https://images.unsplash.com/photo-1631049552057-403cdb8f0658?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aG90ZWwlMjByb29tfGVufDB8fDB8fHww"
-                        class="card-img-top">
-                    <div class="card-body">
-                        <h5>Simple room Name</h5>
-                        <div class="features mb-4">
-                            <h6 class="mb-4">৳200 per night</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">2 Rooms</span>
-                            <span class="badge rounded-pill text-dark text-wrap"> 1 Bathroom</span>
-                            <span class="badge rounded-pill text-dark text-wrap">1 Balcony</span>
-                            <span class="badge rounded-pill text-dark text-wrap">3 Sofa</span>
-                        </div>
-                        <div class="facilities mb-4">
-                            <h6 class="mb-1">Facilities</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">Wifi</span>
-                            <span class="badge rounded-pill text-dark text-wrap">Television</span>
-                            <span class="badge rounded-pill text-dark text-wrap">AC</span>
-                            <span class="badge rounded-pill text-dark text-wrap">Room Heater</span>
-                        </div>
-                        <div class="facilities mb-4">
-                            <h6 class="mb-1">Guest</h6>
-                            <span class="badge rounded-pill text-dark text-wrap">5 Adults</span>
-                            <span class="badge rounded-pill text-dark text-wrap">4 Children</span>
-                        </div>
-                        <div class="rating mb-4">
-                            <h6 class="mb-1">Rating</h6>
-                            <span class="badge rounded-pill bg-light">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                            </span>
-                        </div>
-                        <div class="d-flex justify-content-evenly">
-                            <a href="#" class="btn btn-sm text-white custom-bg shadow-none">Book now</a>
-                            <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <?php endwhile; ?>
+
+
             <div class="col-lg-12 text-center mt-5">
-                <a href="#" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms >>></a>
+                <a href="rooms.php" class="btn btn-sm btn-outline-dark rounded-0 fw-bold shadow-none">More Rooms >>></a>
             </div>
         </div>
     </div>
 
 
-    <!-- Facilities -->
+    <!--========================Facilities =========================================-->
 
-    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
-    <div class="container">
-        <div class="row justify-content-evenly px-lg-0 px-md-0 px-5">
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-                <img src="./images/feautures/wifi.svg" width="80px">
-                <h5 class="mt-3">Wifi</h5>
+    <section class="container my-5">
+        <div class="text-start mb-5">
+            <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
+            <h2 class="fw-bold">Luxury Amenities Tailored For You</h2>
+            <a href="#" class="btn btn-success mt-2">Explore All Facilities →</a>
+        </div>
+
+        <!-- Facility 1 -->
+        <div class="row align-items-center mb-5 pt-4 border-top">
+            <div class="col-md-6">
+                <img src="./images/facility/pexels-ahmetcotur-20975727.jpg" class="img-fluid rounded" alt="">
             </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-                <img src="./images/feautures/wifi.svg" width="80px">
-                <h5 class="mt-3">star</h5>
-            </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-                <img src="./images/feautures/wifi.svg" width="80px">
-                <h5 class="mt-3">Star</h5>
-            </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-                <img src="./images/feautures/wifi.svg" width="80px">
-                <h5 class="mt-3">Wifi</h5>
-            </div>
-            <div class="col-lg-2 col-md-2 text-center bg-white rounded shadow py-4 my-3">
-                <img src="./images/feautures/wifi.svg" width="80px">
-                <h5 class="mt-3">Wifi</h5>
-            </div>
-            <div class="col-lg-12 text-center mt-5">
-                <a href="#" class="btn btn-sm btn-outline-dark shadow-none">More Facilities</a>
+            <div class="col-md-6 mt-3 mt-md-0">
+                <h3>Signature Spa & Wellness Retreat</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <ul class="list-unstyled">
+                    <li>• Private spa suites for couples and individuals.</li>
+                    <li>• Holistic treatments & aromatherapy.</li>
+                    <li>• Yoga, meditation & wellness workshops.</li>
+                </ul>
             </div>
         </div>
-    </div>
 
-    <!-- Testimonials -->
-    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
-    <div class="container mt-5">
-        <!-- Swiper -->
-        <div class="swiper swiper-testimonials">
-            <div class="swiper-wrapper mb-5">
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center">
-                        <img src="https://swiperjs.com/demos/images/nature-1.jpg" width="30px" />
-                        <h6 class="m-0 ms-2">Random user1</h6>
-                    </div>
-                    <p>
-                        Lorem ipsum" is a standard dummy or placeholder text used in the design, publishing, and web
-                        development industries. Its primary purpose is to allow designers and typesetters to focus on
-                        the visual layout and typography of a project without being distracted by meaningful content
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
+        <!-- Facility 2 -->
+        <div class="row align-items-center mb-5 pt-4 border-top flex-md-row-reverse">
+            <div class="col-md-6">
+                <img src="./images/facility/pexels-asadphoto-12516848.jpg" class="img-fluid rounded" alt="">
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0">
+                <h3>Infinity Pool & Sunset Deck</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <ul class="list-unstyled">
+                    <li>• Stunning infinity pool with scenic views.</li>
+                    <li>• Private cabanas with butler service.</li>
+                    <li>• Sunset deck for relaxation or cocktails.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Facility 3 -->
+        <div class="row align-items-center mb-5 pt-4 border-top">
+            <div class="col-md-6">
+                <img src="./images/facility/pexels-damaaa-27623464.jpg" class="img-fluid rounded" alt="">
+            </div>
+            <div class="col-md-6 mt-3 mt-md-0">
+                <h3>Private Beach & Water Experiences</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <ul class="list-unstyled">
+                    <li>• Exclusive white-sand beach access.</li>
+                    <li>• Kayaking, snorkeling, paddleboarding.</li>
+                    <li>• Beach dining & picnic setups.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ====================Special Offers======================================== -->
+    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Offer Discount</h2>
+    <section class="special-offers py-5 w-100">
+        <div class="text-center container-fluid px-0 text-white">
+
+            <!-- Header -->
+            <div class="mb-5">
+                <h2 class="fw-bold">Exclusive Packages For An Unforgettable Stay</h2>
+                <p class="mx-auto mt-2" style="max-width: 750px;">
+                    At Lustara, we believe in curating more than just a stay — we create experiences.
+                    Discover our limited-time offers designed for romance, family moments, and indulgent escapes.
+                </p>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- Card 1 -->
+                <div class="col-lg-6">
+                    <div class="offer-card light d-flex flex-column flex-md-row">
+                        <div class="discount-badge">20%<br><span>Discount</span></div>
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" class="img-fluid"
+                            alt="">
+                        <div class="offer-content">
+                            <h3>Honeymoon Escape</h3>
+                            <p>Celebrate love in ultimate luxury with a private villa, romantic dinner and couples’ spa
+                                treatments.</p>
+                            <a href="#">Read More →</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center">
-                        <img src="https://swiperjs.com/demos/images/nature-1.jpg" width="30px" />
-                        <h6 class="m-0 ms-2">Random user1</h6>
-                    </div>
-                    <p>
-                        Lorem ipsum" is a standard dummy or placeholder text used in the design, publishing, and web
-                        development industries. Its primary purpose is to allow designers and typesetters to focus on
-                        the visual layout and typography of a project without being distracted by meaningful content
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
+                <!-- Card 2 -->
+                <div class="col-lg-6">
+                    <div class="offer-card dark d-flex flex-column flex-md-row">
+                        <div class="discount-badge">10%<br><span>Discount</span></div>
+                        <img src="https://www.adventurebook.com/connect/wp-content/uploads/sites/2/2022/08/family-weekend-getaway.jpg"
+                            class="img-fluid" alt="">
+                        <div class="offer-content">
+                            <h3>Family Getaway</h3>
+                            <p>Bring the whole family and enjoy spacious suites and kid-friendly activities.</p>
+                            <a href="#">Read More →</a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="swiper-slide bg-white p-4">
-                    <div class="profile d-flex align-items-center">
-                        <img src="https://swiperjs.com/demos/images/nature-1.jpg" width="30px" />
-                        <h6 class="m-0 ms-2">Random user1</h6>
+                <!-- Card 3 -->
+                <div class="col-lg-6">
+                    <div class="offer-card dark d-flex flex-column flex-md-row">
+                        <div class="discount-badge">15%<br><span>Discount</span></div>
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df" class="img-fluid" alt="">
+                        <div class="offer-content">
+                            <h3>Wellness Retreat</h3>
+                            <p>Rebalance your mind and body with holistic retreat programs & rejuvenating spa sessions.
+                            </p>
+                            <a href="#">Read More →</a>
+                        </div>
                     </div>
-                    <p>
-                        Lorem ipsum" is a standard dummy or placeholder text used in the design, publishing, and web
-                        development industries. Its primary purpose is to allow designers and typesetters to focus on
-                        the visual layout and typography of a project without being distracted by meaningful content
-                    </p>
-                    <div class="rating">
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
-                        <i class="bi bi-star-fill text-warning"></i>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-6">
+                    <div class="offer-card dark d-flex flex-column flex-md-row">
+                        <div class="discount-badge">25%<br><span>Discount</span></div>
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836" class="img-fluid"
+                            alt="">
+                        <div class="offer-content">
+                            <h3>Romantic Dinner By The Sea</h3>
+                            <p>A one-of-a-kind dining experience with private beach setup and a gourmet five-course
+                                menu.</p>
+                            <a href="#">Read More →</a>
+                        </div>
                     </div>
                 </div>
 
             </div>
-            <div class="swiper-pagination"></div>
         </div>
-        <div class="col-lg-12 text-center mt-5">
-            <a href="#" class="btn btn-sm btn-outline-dark shadow-none">Know more</a>
-        </div>
-    </div>
+    </section>
+
 
     <!-- Read Us -->
-    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">OUR FACILITIES</h2>
+    <h2 class="mt-5 pt-4 mb-4 text-center fw-bold h-font">Contact Us</h2>
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-md-8 p-4 mb-lg-0 mb-3 bg-white rounded">
@@ -410,41 +437,7 @@
         },
     });
     </script>
-    <!-- Testomonials -->
-    <!-- Initialize Swiper -->
-    <script>
-    var swiper = new Swiper(".swiper-testimonials", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        slidesPerView: "3",
-        loop: true,
-        coverflowEffect: {
-            rotate: 50,
-            stretch: 0,
-            depth: 100,
-            modifier: 1,
-            slideShadows: false,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1,
-            },
-            640: {
-                slidesPerView: 1,
-            },
-            768: {
-                slidesPerView: 2,
-            },
-            1024: {
-                slidesPerView: 3,
-            },
-        }
-    });
+
     </script>
 </body>
 
