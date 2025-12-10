@@ -20,10 +20,10 @@ $room_id = $_GET['room_id'];
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-                <h2 class="mb-4">Upload Images for Room ID: <?php echo $room_id; ?></h2>
+                <h2 class="mb-4">Upload Images for Room ID: <?= $room_id; ?></h2>
 
                 <form action="insert_room_images.php" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="room_id" value="<?php echo $room_id; ?>">
+                    <input type="hidden" name="room_id" value="<?= $room_id; ?>">
 
                     <div class="mb-3">
                         <label class="form-label">Select Images (Multiple Allowed)</label>
