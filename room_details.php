@@ -3,7 +3,7 @@ require('common/links.php');
 require('common/header.php');
 require('admin/inc/connection.php');  
 
-// get room id from URL, default 0
+
 $room_id = $_GET['id'] ?? 0;
 
 // get room details
@@ -11,14 +11,14 @@ $room_query = "SELECT * FROM room_details WHERE id=$room_id";
 $room_res = mysqli_query($conn, $room_query);
 $room = mysqli_fetch_assoc($room_res);
 
-// get room images
+
 $images = [];
 $img_res = mysqli_query($conn, "SELECT images_path FROM room_images WHERE room_id=$room_id");
 while($img = mysqli_fetch_assoc($img_res)) {
     $images[] = $img['images_path'];
 }
 
-// if no images found, use main image
+//  images no found use main image
 if(count($images) == 0 && !empty($room['main_image'])) {
     $images[] = $room['main_image'];
 }
@@ -46,12 +46,7 @@ if(count($images) == 0 && !empty($room['main_image'])) {
         height: 60px;
         object-fit: cover;
         cursor: pointer;
-        border: 2px solid transparent;
         border-radius: 5px;
-    }
-
-    .thumb-img.active {
-        border-color: #0d6efd;
     }
     </style>
 
@@ -67,9 +62,8 @@ if(count($images) == 0 && !empty($room['main_image'])) {
                 <img id="mainImage" src="admin/<?= $images[0] ?>" class="main-img mb-3">
 
                 <div class="d-flex gap-2">
-                    <?php foreach($images as $i => $img): ?>
-                    <img src="admin/<?= $img ?>" class="thumb-img <?= $i==0 ? 'active' : '' ?>"
-                        onclick="changeImage(this)">
+                    <?php foreach($images as $img): ?>
+                    <img src="admin/<?= $img ?>" class="thumb-img" onclick="changeImage(this)">
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -80,21 +74,19 @@ if(count($images) == 0 && !empty($room['main_image'])) {
                     <?= $room['room_type'] ?> - Room <?= $room['room_number'] ?>
                 </h2>
 
-                <!-- SIMPLE STATUS BADGE -->
                 <p>
                     <?php
-$status = strtolower(trim($room['status'])); // lowercase & trim spaces
-
-if ($status == "available") {
-    echo "<span class='badge bg-success'>Available</span>";
-} elseif ($status == "booked") {
-    echo "<span class='badge bg-danger'>Booked</span>";
-} elseif ($status == "maintenance") {
-    echo "<span class='badge bg-warning text-dark'>Maintenance</span>";
-} else {
-    echo "<span class='badge bg-secondary'>Unknown</span>";
-}
-?>
+                        $status = strtolower(trim($room['status'])); 
+                        if ($status == "available") {
+                            echo "<span class='badge bg-success'>Available</span>";
+                        } elseif ($status == "booked") {
+                            echo "<span class='badge bg-danger'>Booked</span>";
+                        } elseif ($status == "maintenance") {
+                            echo "<span class='badge bg-warning text-dark'>Maintenance</span>";
+                        } else {
+                            echo "<span class='badge bg-secondary'>Unknown</span>";
+                        }
+                    ?>
                 </p>
 
                 <h4 class="mb-3">Tk<?= number_format($room['price'],2) ?> / night</h4>
@@ -105,7 +97,7 @@ if ($status == "available") {
 
                 <p class="text-muted"><?= $room['description'] ?></p>
 
-                <button class="btn btn-sm text-white custom-bg">Book Now</button>
+                <a href="booking_form.php?id=<?= $row['id']; ?>" class=" btn btn-sm text-white custom-bg">Book Now</a>
             </div>
 
         </div>
@@ -113,15 +105,9 @@ if ($status == "available") {
 
     <?php require('common/footer.php'); ?>
 
-    <!-- SIMPLE JS -->
     <script>
     function changeImage(el) {
         document.getElementById('mainImage').src = el.src;
-
-        document.querySelectorAll('.thumb-img')
-            .forEach(img => img.classList.remove('active'));
-
-        el.classList.add('active');
     }
     </script>
 
